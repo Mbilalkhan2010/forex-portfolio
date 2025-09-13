@@ -1,136 +1,88 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Forex Portfolio - My Investments</title>
+  <meta charset="UTF-8">
+  <title>Forex Portfolio Dashboard</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+  <!-- Sidebar -->
   <aside class="sidebar" id="sidebar">
-    <div class="brand">
-      <h2 id="siteName">My Forex Portfolio</h2>
-      <div class="small">Track trades · P&L · Allocation</div>
-    </div>
+    <h2 id="siteName">My Forex</h2>
     <nav>
-      <a href="#" data-view="dashboard" class="active">Dashboard</a>
-      <a href="#" data-view="trades">Trades</a>
-      <a href="#" data-view="portfolio">Portfolio</a>
-      <a href="#" data-view="settings">Settings</a>
+      <a href="#">Dashboard</a>
+      <a href="#">Trades</a>
+      <a href="#">Analytics</a>
+      <a href="#" onclick="openSettings()">⚙️ Settings</a>
+      <button id="themeToggle">🌙</button>
     </nav>
-    <div class="sidebar-foot">© <span id="year">2025</span> <span id="ownerName">You</span></div>
   </aside>
 
+  <!-- Main content -->
   <div class="main-content">
-    <header class="topbar">
-      <h1 id="dashboardTitle">Forex Portfolio Dashboard</h1>
-      <div class="top-actions">
-        <button id="btnAddTrade">+ Add Trade</button>
-        <button id="btnImport">Import CSV</button>
-        <button id="btnExport">Export CSV</button>
-      </div>
+    <header class="header">
+      <h1 id="dashboardTitle">Forex Trading Dashboard</h1>
     </header>
 
-    <main id="content">
-      <!-- Dashboard -->
-      <section id="view-dashboard" class="view">
-        <div class="grid">
-          <div class="card">
-            <h3>Net P&L</h3>
-            <div class="big" id="netPl">0.00</div>
-            <div id="plBreakdown" class="muted">Wins: 0 · Losses: 0</div>
-          </div>
-          <div class="card">
-            <h3>Open Positions</h3>
-            <div id="openCount" class="big">0</div>
-            <div class="muted">Positions currently open</div>
-          </div>
-          <div class="card">
-            <h3>Equity Chart</h3>
-            <canvas id="equityChart" height="140"></canvas>
-          </div>
-          <div class="card">
-            <h3>Allocation</h3>
-            <canvas id="allocChart" height="140"></canvas>
-          </div>
-        </div>
-      </section>
+    <section class="card">
+      <h2>Performance Chart</h2>
+      <canvas id="equityChart" height="200"></canvas>
+    </section>
 
-      <!-- Trades -->
-      <section id="view-trades" class="view" style="display:none">
-        <div class="card">
-          <h3>Trades</h3>
-          <div class="controls">
-            <input id="searchTrades" placeholder="Search pair or note">
-            <select id="filterSide"><option value="">All</option><option>Buy</option><option>Sell</option></select>
-            <button id="clearFilter">Clear</button>
-          </div>
-          <div class="table-wrap">
-            <table id="tradesTable">
-              <thead>
-                <tr><th>Date</th><th>Pair</th><th>Side</th><th>Size</th><th>Open</th><th>Close</th><th>Profit</th><th>Note</th><th></th></tr>
-              </thead>
-              <tbody></tbody>
-            </table>
-          </div>
-        </div>
-      </section>
+    <section class="card">
+      <h2>Trades Table</h2>
+      <button onclick="openTradeModal()">➕ Add Trade</button>
+      <table id="tradesTable">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Pair</th>
+            <th>Side</th>
+            <th>Size</th>
+            <th>Profit</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </section>
 
-      <!-- Portfolio -->
-      <section id="view-portfolio" class="view" style="display:none">
-        <div class="card">
-          <h3>Current Portfolio</h3>
-          <div id="portfolioList"></div>
-        </div>
-      </section>
-
-      <!-- Settings -->
-      <section id="view-settings" class="view" style="display:none">
-        <div class="card">
-          <h3>Settings</h3>
-          <label>Owner Name</label>
-          <input id="ownerInput" placeholder="Your name">
-          <label>Dashboard Title</label>
-          <input id="titleInput" placeholder="Dashboard title">
-          <label>Sidebar Color</label>
-          <input type="color" id="sidebarColor" value="#1f2937">
-          <label>Background Color</label>
-          <input type="color" id="bgColor" value="#f4f4f4">
-          <div style="margin-top:12px;">
-            <button id="saveSettingsBtn">Save Settings</button>
-            <button id="resetBtn">Reset Data</button>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="footer">
-      <p id="footerText">Built with ❤️</p>
-    </footer>
-  </div>
-
-  <!-- Hidden Add Trade Modal -->
-  <div id="modal" class="modal" style="display:none;">
-    <div class="modal-card">
-      <h3>Add Trade</h3>
-      <label>Date</label><input type="date" id="t_date">
-      <label>Pair</label><input id="t_pair" placeholder="EURUSD">
-      <label>Side</label>
-      <select id="t_side"><option>Buy</option><option>Sell</option></select>
-      <label>Size (lots)</label><input id="t_size" type="number" step="0.01" value="0.1">
-      <label>Open Price</label><input id="t_open" type="number" step="0.0001">
-      <label>Close Price</label><input id="t_close" type="number" step="0.0001">
-      <label>Profit</label><input id="t_profit" type="number" step="0.01">
-      <label>Note</label><input id="t_note" placeholder="optional">
-      <div class="modal-actions">
-        <button id="saveTrade">Save Trade</button>
-        <button id="cancelTrade">Cancel</button>
+    <!-- Trade Modal -->
+    <div id="tradeModal" class="modal" style="display:none;">
+      <div class="modal-content">
+        <h3 id="modalTitle">Add Trade</h3>
+        <label>Date:</label><input type="date" id="tradeDate"><br>
+        <label>Pair:</label><input type="text" id="tradePair"><br>
+        <label>Side:</label><input type="text" id="tradeSide"><br>
+        <label>Size:</label><input type="number" id="tradeSize"><br>
+        <label>Profit:</label><input type="number" id="tradeProfit"><br>
+        <button onclick="saveTrade()">Save</button>
+        <button onclick="closeTradeModal()">Cancel</button>
       </div>
     </div>
-  </div>
 
-  <input type="file" id="csvFile" accept=".csv" style="display:none">
+    <!-- Settings Panel -->
+    <section class="card" id="settingsPanel" style="display:none;">
+      <h2>⚙️ Settings</h2>
+
+      <label>Dashboard Title:</label><br>
+      <input type="text" id="titleInput" placeholder="Enter dashboard name"><br><br>
+
+      <label>Sidebar Color:</label><br>
+      <input type="color" id="sidebarColor" value="#1f2937"><br><br>
+
+      <label>Background Color:</label><br>
+      <input type="color" id="bgColor" value="#f4f4f4"><br><br>
+
+      <button onclick="saveSettings()">💾 Save</button>
+    </section>
+
+    <footer class="footer">
+      <p id="footerText">© 2025 My Forex Dashboard</p>
+    </footer>
+  </div>
 
   <script src="js/script.js"></script>
 </body>
