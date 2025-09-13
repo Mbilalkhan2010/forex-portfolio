@@ -1,54 +1,46 @@
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
+  font-family: Arial, sans-serif;
   display: flex;
-  background: var(--bg-color, #f4f4f4);
-  color: var(--text-color, #000);
 }
 .sidebar {
-  width: 200px;
-  padding: 15px;
-  background: var(--sidebar-color, #1f2937);
-  color: #fff;
+  width: 220px;
+  background: #222;
+  color: white;
+  padding: 10px;
+  min-height: 100vh;
 }
-.sidebar a, .sidebar button {
+.sidebar h2 { margin-top: 0; }
+.sidebar button {
   display: block;
-  margin: 10px 0;
-  color: inherit;
-  text-decoration: none;
-  background: none;
+  margin: 5px 0;
+  width: 100%;
+  padding: 8px;
   border: none;
   cursor: pointer;
+  background: #444;
+  color: white;
+}
+.sidebar button:hover {
+  background: #666;
 }
 .main-content {
-  flex: 1;
+  flex-grow: 1;
   padding: 20px;
 }
 .card {
-  background: var(--card-bg, #fff);
-  padding: 15px;
+  background: #f4f4f4;
+  padding: 20px;
   margin-bottom: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
-.modal {
-  position: fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background: rgba(0,0,0,0.5);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-.modal-content {
-  background:#fff;
-  padding:20px;
-  border-radius:8px;
-}
-/* Dark theme vars */
 body.dark {
-  --bg-color: #121212;
-  --text-color: #eee;
-  --card-bg: #1e1e1e;
-  --sidebar-color: #000;
+  background: #121212;
+  color: #eee;
+}
+body.dark .card {
+  background: #1e1e1e;
+}
+body.dark .sidebar {
+  background: #111;
 }
