@@ -1,101 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>Forex Portfolio Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <!-- Sidebar -->
-  <aside id="sidebar" class="sidebar">
+  <aside class="sidebar" id="sidebar">
     <h2 id="siteName">My Forex</h2>
     <nav>
-      <button onclick="showSection('dashboard')">Dashboard</button>
-      <button onclick="showSection('trades')">Trades</button>
-      <button onclick="showSection('analytics')">Analytics</button>
-      <button onclick="showSection('about')">About Us</button>
-      <button onclick="showSection('contact')">Contact Us</button>
-      <button onclick="openSettings()">⚙️ Settings</button>
+      <a href="#">Dashboard</a>
+      <a href="#">Trades</a>
+      <a href="#">Analytics</a>
+      <a href="#" onclick="openSettings()">⚙️ Settings</a>
       <button id="themeToggle">🌙</button>
     </nav>
   </aside>
 
-  <!-- Main Content -->
+  <!-- Main content -->
   <div class="main-content">
-    <!-- Dashboard -->
-    <section id="dashboardSection" class="card">
-      <h2 id="dashboardTitle">Dashboard</h2>
-      <canvas id="equityChart"></canvas>
+    <header class="header">
+      <h1 id="dashboardTitle">Forex Trading Dashboard</h1>
+    </header>
+
+    <section class="card">
+      <h2>Performance Chart</h2>
+      <canvas id="equityChart" height="200"></canvas>
     </section>
 
-    <!-- Trades -->
-    <section id="tradesSection" class="card" style="display:none;">
-      <h2>Trades</h2>
-      <table id="tradesTable" border="1" style="width:100%">
-        <thead>
-          <tr><th>Date</th><th>Pair</th><th>Side</th><th>Size</th><th>Profit</th><th>Actions</th></tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+    <section class="card">
+      <h2>Trades Table</h2>
       <button onclick="openTradeModal()">➕ Add Trade</button>
+      <table id="tradesTable">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Pair</th>
+            <th>Side</th>
+            <th>Size</th>
+            <th>Profit</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
     </section>
 
-    <!-- Analytics -->
-    <section id="analyticsSection" class="card" style="display:none;">
-      <h2>Analytics</h2>
-      <canvas id="analyticsChart"></canvas>
-    </section>
-
-    <!-- About Us -->
-    <section id="aboutSection" class="card" style="display:none;">
-      <h2>About Us</h2>
-      <p>Ye website M Bilal Khan ka Forex Portfolio dikhane ke liye banayi gayi hai.</p>
-    </section>
-
-    <!-- Contact Us -->
-    <section id="contactSection" class="card" style="display:none;">
-      <h2>Contact Us</h2>
-      <form onsubmit="alert('Message sent!'); return false;">
-        <label>Name:</label><br><input type="text" required><br>
-        <label>Email:</label><br><input type="email" required><br>
-        <label>Message:</label><br><textarea required></textarea><br>
-        <button type="submit">Send</button>
-      </form>
-    </section>
-  </div>
-
-  <!-- Trade Modal -->
-  <div id="tradeModal" class="modal">
-    <div class="modal-content">
-      <span onclick="closeTradeModal()" class="close">&times;</span>
-      <h3 id="modalTitle">Add Trade</h3>
-      <label>Date:</label><input type="date" id="tradeDate"><br>
-      <label>Pair:</label><input type="text" id="tradePair"><br>
-      <label>Side:</label><select id="tradeSide"><option>Buy</option><option>Sell</option></select><br>
-      <label>Size:</label><input type="number" id="tradeSize"><br>
-      <label>Profit:</label><input type="number" id="tradeProfit"><br>
-      <button onclick="saveTrade()">Save</button>
+    <!-- Trade Modal -->
+    <div id="tradeModal" class="modal" style="display:none;">
+      <div class="modal-content">
+        <h3 id="modalTitle">Add Trade</h3>
+        <label>Date:</label><input type="date" id="tradeDate"><br>
+        <label>Pair:</label><input type="text" id="tradePair"><br>
+        <label>Side:</label><input type="text" id="tradeSide"><br>
+        <label>Size:</label><input type="number" id="tradeSize"><br>
+        <label>Profit:</label><input type="number" id="tradeProfit"><br>
+        <button onclick="saveTrade()">Save</button>
+        <button onclick="closeTradeModal()">Cancel</button>
+      </div>
     </div>
-  </div>
 
-  <!-- Settings Panel -->
-  <div id="settingsPanel" class="modal">
-    <div class="modal-content">
-      <span onclick="document.getElementById('settingsPanel').style.display='none'" class="close">&times;</span>
-      <h3>Settings</h3>
-      <label>Dashboard Title:</label><input type="text" id="titleInput"><br>
-      <label>Sidebar Color:</label><input type="color" id="sidebarColor"><br>
-      <label>Background Color:</label><input type="color" id="bgColor"><br>
+    <!-- Settings Panel -->
+    <section class="card" id="settingsPanel" style="display:none;">
+      <h2>⚙️ Settings</h2>
+
+      <label>Dashboard Title:</label><br>
+      <input type="text" id="titleInput" placeholder="Enter dashboard name"><br><br>
+
+      <label>Sidebar Color:</label><br>
+      <input type="color" id="sidebarColor" value="#1f2937"><br><br>
+
+      <label>Background Color:</label><br>
+      <input type="color" id="bgColor" value="#f4f4f4"><br><br>
+
       <button onclick="saveSettings()">💾 Save</button>
-    </div>
+    </section>
+
+    <footer class="footer">
+      <p id="footerText">© 2025 My Forex Dashboard</p>
+    </footer>
   </div>
 
-  <footer>
-    <p id="footerText">© 2025 My Forex</p>
-  </footer>
-
-  <script src="script.js"></script>
+  <script src="js/script.js"></script>
 </body>
 </html>
